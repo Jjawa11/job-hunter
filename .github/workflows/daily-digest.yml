@@ -1,9 +1,13 @@
+cat > .github/workflows/daily-digest.yml << 'EOF'
 name: Daily LinkedIn Job Digest
 
 on:
   schedule:
-    - cron: '0 22 * * *'   # 8:00 AM AEST (UTC+10)
-  workflow_dispatch:         # Manual trigger from GitHub UI anytime
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   job-hunt:
@@ -20,8 +24,10 @@ jobs:
 
       - name: Run job hunter
         env:
-          LINKEDIN_LI_AT:     ${{ secrets.LINKEDIN_LI_AT }}
-          ANTHROPIC_API_KEY:  ${{ secrets.ANTHROPIC_API_KEY }}
-          EMAIL_SENDER:       ${{ secrets.EMAIL_SENDER }}
-          EMAIL_PASSWORD:     ${{ secrets.EMAIL_PASSWORD }}
+          LINKEDIN_LI_AT:      ${{ secrets.LINKEDIN_LI_AT }}
+          LINKEDIN_JSESSIONID: ${{ secrets.LINKEDIN_JSESSIONID }}
+          ANTHROPIC_API_KEY:   ${{ secrets.ANTHROPIC_API_KEY }}
+          EMAIL_SENDER:        ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD:      ${{ secrets.EMAIL_PASSWORD }}
         run: python job_hunter.py
+EOF
