@@ -1,4 +1,3 @@
-cat > .github/workflows/daily-digest.yml << 'EOF'
 name: Daily LinkedIn Job Digest
 
 on:
@@ -30,4 +29,3 @@ jobs:
           EMAIL_SENDER:        ${{ secrets.EMAIL_SENDER }}
           EMAIL_PASSWORD:      ${{ secrets.EMAIL_PASSWORD }}
         run: python job_hunter.py
-EOF
